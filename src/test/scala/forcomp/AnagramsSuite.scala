@@ -1,6 +1,7 @@
 package forcomp
 
 class AnagramsSuite extends munit.FunSuite:
+
   import Anagrams.*
 
   test("wordOccurrences: abcd (3pts)") {
@@ -29,7 +30,6 @@ class AnagramsSuite extends munit.FunSuite:
   test("wordAnagrams player (2pts)") {
     assertEquals(wordAnagrams("player").toSet, Set("parley", "pearly", "player", "replay"))
   }
-
 
 
   test("subtract: lard - r (10pts)") {
@@ -101,4 +101,5 @@ class AnagramsSuite extends munit.FunSuite:
 
 
   import scala.concurrent.duration.*
+
   override val munitTimeout = 10.seconds
