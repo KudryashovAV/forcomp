@@ -89,12 +89,11 @@ object Anagrams extends AnagramsInterface:
   def combinations(occurrences: Occurrences): List[Occurrences] = occurrences match
     case List() => List[Occurrences](List())
     case (char, count) :: os =>
-      for {
+      for
         rs <- combinations(os)
         i <- 0 to count
-      } yield {
+      yield
         (if i == 0 then rs else rs :+ (char, i)).sortBy(_._1)
-      }
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
@@ -153,7 +152,18 @@ object Anagrams extends AnagramsInterface:
    *
    * Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] =
+    def build(occ: Occurrences): List[Sentence] = occ match
+      case List() => List(List())
+      case _ =>
+        for
+          combination <- combinations(occ)
+          if dictionaryByOccurrences.contains(combination)
+          word <- dictionaryByOccurrences(combination)
+          rest <- build(subtract(occ, combination))
+        yield word :: rest
+
+    build(sentenceOccurrences(sentence))
 
 object Dictionary:
   def loadDictionary: List[String] =
